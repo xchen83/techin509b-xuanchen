@@ -1,0 +1,30 @@
+from typing import List
+
+board = [
+    "......................",
+    "......##########......",
+    "......#........#......",
+    "......#........#......",
+    "......#........#####..",
+    "....###............#..",
+    "....#............###..",
+    "....##############....",
+]
+
+def flood_fill(input_board: List[str], old: str, new: str, x: int, y: int) -> List[str]:
+    if (
+        0 <= x < len(input_board) and
+      0 <= y < len(input_board[0]) and
+      input_board[x][y] == old
+    ):
+        input_board[x] = input_board[x][:y] + new + input_board[x][y+1:]
+        flood_fill(input_board, old, new, x+1, y) 
+        flood_fill(input_board, old, new, x-1, y)
+        flood_fill(input_board, old, new, x, y+1)
+        flood_fill(input_board, old, new, x, y-1)
+    return input_board
+
+modified_board = flood_fill(input_board=board, old=".", new="~", x=5, y=12)
+
+for a in modified_board:
+    print(a)
